@@ -16,7 +16,7 @@ services:
     # build:
     #   context: .
     #   dockerfile: Dockerfile
-    image: rayahhmed/alloc-server
+    image: rayahhmed/alloc-server:alloc-server
     environment:
       - PORT=3000
     ports:

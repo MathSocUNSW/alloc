@@ -9,3 +9,65 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  zid            String        @id
+  email          String        @unique
+  access         Access        @default(APPLICANT)
+  accountCreated DateTime      @default(now())
+  lastLoggedIn   DateTime
+  applications   Application[]
+  Notes          Notes?        @relation(fields: [notesId], references: [id])
+  notesId        String?
+}
+
+enum Access {
+  EXECUTIVE
+  DIRECTOR
+  APPLICANT
+}
+
+model Application {
+  id                 String       @id @default(uuid())
+  User               User?        @relation(fields: [userZid], references: [zid])
+  userZid            String
+  userResponse       AnswerRecord @relation(fields: [answerRecordId], references: [id])
+  applicationCreated DateTime     @default(now())
+  staffNotes         Notes[]
+  answerRecordId     String
+}
+
+model Notes {
+  id            String       @unique @default(uuid())
+  user          User[]
+  values        String[]
+  lastEdited    DateTime     @default(now())
+  Application   Application? @relation(fields: [applicationId], references: [id])
+  applicationId String?
+}
+
+model AnswerRecord {
+  id        String    @unique @default(uuid())
+  portfolio Portfolio
+
+  response    String[]
+  Application Application[]
+}
+
+model QuestionRecord {
+  id        String    @unique @default(uuid())
+  portfolio Portfolio
+  questions String[]
+  created   DateTime  @default(now())
+}
+
+enum Portfolio {
+  ACADEMICS
+  EDUCATION
+  CAREERS
+  SOCIALS
+  IT
+  HR
+  MARKETING
+  CREATIVE
+}

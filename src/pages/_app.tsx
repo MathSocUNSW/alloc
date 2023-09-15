@@ -1,11 +1,29 @@
+// Library Imports
+import React from "react";
 import { type AppType } from "next/app";
 
-import { api } from "~/utils/api";
+// Component Imports
+import Layout from "../components/Layout";
 
+// Styling
+import { ThemeProvider, StyledEngineProvider, createTheme } from "@mui/material/styles";
 import "~/styles/globals.css";
 
-const MyApp: AppType = ({ Component, pageProps }) => {
-  return <Component {...pageProps} />;
+// Data
+import { api } from "~/utils/api";
+
+const theme = createTheme();
+
+const App: AppType = ({ Component, pageProps }) => {
+  return (
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={theme}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </ThemeProvider>
+    </StyledEngineProvider>
+  );
 };
 
-export default api.withTRPC(MyApp);
+export default api.withTRPC(App);

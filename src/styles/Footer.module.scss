@@ -1,0 +1,55 @@
+@import "./variables.scss";
+
+.footer {
+  background-color: #303743;
+  height: $footerHeight;
+  display: grid;
+  place-items: center;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.leftText {
+  color: white;
+  font-size: 1.15rem;
+  font-weight: 600;
+  text-align: left;
+}
+
+.socials {
+  list-style: none;
+  display: flex;
+  & > *:not(:last-child) {
+    margin-right: 1rem;
+  }
+}
+
+/* Icon bounce animation */
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+.socialItem {
+  display: grid;
+  align-items: center;
+  .socialIcon {
+    max-height: 45px;
+  }
+  .socialIcon:hover {
+    animation: bounce 0.75s;
+    opacity: 75%;
+  }
+}
+
